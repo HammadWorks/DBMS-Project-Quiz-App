@@ -5,34 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
     <style>
-        nav ul {
+        *{
             padding: 0;
-            display: flex;
-            gap: 5px;
+            margin: 0;
         }
-        nav ul li {
-            list-style: none;
+        nav{
+            padding: 20px;
+            background-color: rgb(23, 23, 23);
         }
-        nav li a {
-            text-decoration: none;
-            color: black;
-        }
-        nav li a:hover {
-            text-decoration: underline;
-            color: rgb(21, 0, 255);
-        }
+      nav ul {
+        padding: 0;
+        display: flex;
+        gap: 5px;
+      }
+      nav ul li {
+        list-style: none;
+      }
+      nav li a {
+        text-decoration: none;
+        color: white;
+      }
+      nav li a:hover {
+        text-decoration: underline;
+        color: rgb(21, 0, 255);
+      }
     </style>
   </head>
   <body>
     <nav>
-        <ul>
-            <li><a href="/user/signin">Sign In</a></li>
-            <li><a href="/user/signup">Sign Up</a></li>
-            <% if (locals.user) { %>
-                <li><a href="/user/logout">logout</a></li>
-                <b> <%= user.email %> </b>
-            <% } %>
-        </ul>
+      <ul>
+        <li><a href="/user/signin">Sign In</a></li>
+
+        <% if (locals.user) { %>
+        <li><a href="/user/logout">logout</a></li>
+        <b>Welcome, <%= user.fullName %> </b>
+        <% } else{%>
+        <li><a href="/user/signup">Sign Up</a></li>
+        <% } %>
+      </ul>
     </nav>
     This is the Home Page
   </body>
