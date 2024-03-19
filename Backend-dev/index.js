@@ -2,6 +2,10 @@ const express = require("express");
 const path = require("path");
 const UserRoute = require("./routes/user");
 const { connectToMongoDB } = require("./connect");
+const cookieParser = require("cookie-parser");
+const {
+  verifyTokenMiddleWareForAuthentication,
+} = require("./middlewares/authentication");
 
 const app = express();
 const PORT = 8000;
@@ -14,9 +18,11 @@ connectToMongoDB("mongodb://127.0.0.1:27017/DBMS-Project").then(() => {
 });
 
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(verifyTokenMiddleWareForAuthentication("token"));
 
 app.get("/", (req, res) => {
-  return res.render("Home");
+  return res.render("Home",{user: req.user});
 });
 
 app.use("/user", UserRoute);
