@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form{
+            display: flex;
+            flex-direction: column;
+            width: 40vw;
+            gap: 6px;
+        }
+    </style>
+</head>
+<body>
+    <h3>SignUp</h3>
+    <form action="/user/Signup" method="post">
+      <label for="email">Enter email: </label>
+      <input type="email" name="email" id="email" />
+      <label for="password">Enter password: </label>
+      <input type="password" name="password" id="password" />
+      <button type="submit">SignUp</button>
+    </form>
+</body>
+</html>

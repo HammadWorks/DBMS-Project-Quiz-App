@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signin Page</title>
+    <style>
+        form{
+            display: flex;
+            flex-direction: column;
+            width: 40vw;
+            gap: 6px;
+        }
+    </style>
+  </head>
+  <body>
+    <h3>Signin</h3>
+    <form action="/user/Signin" method="post">
+      <label for="fullName">Enter Your Name: </label>
+      <input type="text" name="fullName" id="fullName" />
+      <label for="email">Enter email: </label>
+      <input type="email" name="email" id="email" />
+      <label for="password">Enter password: </label>
+      <input type="password" name="password" id="password" />
+      <button type="submit">SignIn</button>
+    </form>
+  </body>
+</html>
