@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <title>Create Quiz</title>
+  
+  <body>
+    <h3>Create Quiz</h3>
+    <form action="/quiz/create-quiz" method="post">
+      <input type="text" name="title" placeholder="Enter Title" required/>
+      <input type="text" name="description" placeholder="Enter Description" required/>
+      <button type="submit">Create</button>
+    </form>
+    <% if (locals.resultQuiz) { %>
+    <div>
+      <ul>
+        <li>Title: <%= resultQuiz.title %></li>
+        <li>Description: <%= resultQuiz.description %></li>
+      </ul>
+    </div>
+    <% } %>
+  </body>
+</html>

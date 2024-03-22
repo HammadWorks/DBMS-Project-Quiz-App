@@ -1,28 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Signin Page</title>
-    <style>
-        form{
-            display: flex;
-            flex-direction: column;
-            width: 40vw;
-            gap: 6px;
-        }
-    </style>
-  </head>
-  <body>
-    <h3>Signin</h3>
-    <form action="/user/Signin" method="post">
-      <label for="fullName">Enter Your Name: </label>
-      <input type="text" name="fullName" id="fullName" />
-      <label for="email">Enter email: </label>
-      <input type="email" name="email" id="email" />
-      <label for="password">Enter password: </label>
-      <input type="password" name="password" id="password" />
-      <button type="submit">SignIn</button>
-    </form>
-  </body>
+   <title>Signin Form</title>
+<%- include('./components/head') %>
+
+<body>
+   <main>
+      <%- include('./components/navbar') %>
+      <form class="form-box" action="/user/Signin" method="post">
+
+         <div class="heading">
+            <h4>Signin</h4>
+         </div>
+         <div class="form-details">
+
+            <div class="form-wrapper">
+               <input name="fullName" id="username" type="text" required>
+               <label for="input">Username</label>
+               <i class="fa fa-check-circle" aria-hidden="true"></i>
+               <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+               <small>Error message</small>
+            </div>
+
+            <div class="form-wrapper">
+               <input name="email" id="email" type="text" required>
+               <label for="input">Email Address</label>
+               <i class="fa fa-check-circle" aria-hidden="true"></i>
+               <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+               <small>Error message</small>
+            </div>
+
+            <div class="form-wrapper">
+               <input name="password" id="password" type="password" required>
+               <label for="password">Password</label>
+               <i class="fa fa-check-circle" aria-hidden="true"></i>
+               <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+               <small>Error message</small>
+            </div>
+
+            <div class="form-wrapper">
+               <input id="password2" type="password" required>
+               <label for="password">Confirm Password</label>
+               <i class="fa fa-check-circle" aria-hidden="true"></i>
+               <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+               <small>Error message</small>
+            </div>
+
+            <button type="submit" id="signin-button">Sign in</button>
+        </form>
+
+         <div class="already-login">
+            Already a member? <a href="/user/signup">Login now</a>
+         </div>
+      </div>
+      <%- include('./components/footer') %>
+   </main>
+   <script>
+      const form = document.getElementById('signin-button');
+      const username = document.getElementById('username');
+      const email = document.getElementById('email');
+      const password = document.getElementById('password');
+      const password2 = document.getElementById('password2');
+
+      form.addEventListener("click", (e) => {
+         e.preventDefault();
+         checkInput();
+      });
+
+      function checkInput() {
+         const usernameValue = username.value.trim();
+         const emailValue = email.value.trim();
+         const passwordValue = password.value.trim();
+         const password2Value = password2.value.trim();
+
+         if (usernameValue === '') {
+            setErrorFor(username, 'Username cannot be blank');
+         } else {
+            setSuccessFor(username);
+         }
+
+         if (emailValue === '') {
+            setErrorFor(email, 'Email cannot be blank');
+         } else if (!isEmail(emailValue)) {
+            setErrorFor(email, 'Email is not valid');
+         } else {
+            setSuccessFor(email);
+         }
+
+         if (passwordValue === '') {
+            setErrorFor(password, 'Password cannot be blank');
+         } else {
+            setSuccessFor(password);
+         }
+
+         if (password2Value === '') {
+            setErrorFor(password2, 'Confirm Password cannot be blank');
+         } else if (passwordValue !== password2Value) {
+            setErrorFor(password2, 'Password not matched')
+         } else {
+            setSuccessFor(password2);
+         }
+      }
+
+      function setErrorFor(input, message) {
+         const formWrapper = input.parentElement;
+         const small = formWrapper.querySelector('small');
+
+         small.innerText = message;
+
+         formWrapper.className = 'form-wrapper error';
+      }
+
+      function setSuccessFor(input) {
+         const formWrapper = input.parentElement;
+         formWrapper.className = 'form-wrapper success';
+      }
+
+      function isEmail(email) {
+         var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+         return regex.test(email);
+      }
+   </script>
+</body>
+
 </html>

@@ -15,12 +15,13 @@ async function handleSignInRequest(req, res) {
 async function handleSignUpRequest(req, res) {
   const body = req.body;
   const user = await User.findOne({ email: body.email });
-  if (!user) return res.status(404).send("User Not Found!");
+  if (!user)
+    return res.status(404).render("signup", { signinEmailError: "User Not Found!" });
   if (user.password === body.password) {
     const token = createTokenForUser(user);
     return res.cookie("token", token).redirect("/");
   }
-  return res.redirect("/user/signup");
+  return res.render("signup", { signinPasswordError: "Incorrect Password!" });
 }
 module.exports = {
   handleSignInRequest,

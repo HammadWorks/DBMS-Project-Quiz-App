@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const UserRoute = require("./routes/user");
+const QuizRoute = require("./routes/quiz");
 const { connectToMongoDB } = require("./connect");
 const cookieParser = require("cookie-parser");
 const {
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", UserRoute);
+app.use("/quiz", QuizRoute);
 
 app.listen(PORT, () => {
   console.log(`Server started at PORT:${PORT}`);
