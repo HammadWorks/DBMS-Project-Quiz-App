@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('./components/head',{title: "Quiz App"}) %>
-
   <body>
     <main>
       <!-- This is the Home Page  -->
@@ -12,12 +10,17 @@
         <ul>
           <li><a href="/quiz/create-quiz">Create Quiz</a></li>
         </ul>
-        <a href="/user/signup">Sign Up</a>
+
+        <% if (!locals.user) { %>
+        <ul>
+          <li><a href="/user/signup">Sign Up</a></li>
+        </ul>
+        <% } else { %>
         <ul>
           <li><a href="/user/logout">Logout</a></li>
         </ul>
+        <% } %>
       </div>
-      <%- include('./components/footer') %>
     </main>
   </body>
 </html>

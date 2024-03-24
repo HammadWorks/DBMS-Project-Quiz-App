@@ -25,6 +25,7 @@
     </div>
 
     <% if (locals.isCreator === true) { %>
+    <button><a href="/quiz/delete/<%= quizId %>">Delete Quiz</a></button>
     <form
       action="/quiz/edit/<%= quizId %>"
       method="post"
@@ -65,6 +66,13 @@
       <li>Choice-2: <%= q.questionId.choices[1] %></li>
       <li>Choice-3: <%= q.questionId.choices[2] %></li>
       <li>Choice-4: <%= q.questionId.choices[3] %></li>
+      <% if (locals.isCreator === true) { %>
+      <button>
+        <a href="/quiz/delete/question/<%= quizId %>/<%= q.questionId._id %>"
+          >Remove Question</a
+        >
+      </button>
+      <%}%>
     </ul>
 
     <% }) %> <% } %> <%}%>

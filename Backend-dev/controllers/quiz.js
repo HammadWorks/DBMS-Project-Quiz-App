@@ -17,7 +17,7 @@ async function handleCreateNewQuiz(req, res) {
     createdBy: req.user._id,
     interactionHistory: [],
   });
-  return res.send("Created");
+  return res.redirect(`/quiz/${result._id}`);
 }
 
 async function handleGetQuizByIdAndshowQuestions(req, res) {
@@ -42,7 +42,7 @@ async function handleGetQuizByIdAndshowQuestions(req, res) {
     //     },
     //   }
     // );
-    
+
     return res.render("Create-Quiz", {
       resultQuiz,
       quizId,
@@ -60,6 +60,7 @@ async function handleAddQuestionsInTheQuiz(req, res) {
   const quest = req.body;
 
   const resultQues = await Question.create({
+    QuizId: req.params.quiz_id,
     question: quest.question,
     choices: [quest.choice1, quest.choice2, quest.choice3, quest.choice4],
     correctChoice: quest.correctChoice,
@@ -78,9 +79,42 @@ async function handleAddQuestionsInTheQuiz(req, res) {
   return res.redirect(`/quiz/${req.params.quiz_id}`);
 }
 
+async function handleDeleteQuizById(req, res) {
+  const quizId = req.params.quiz_id;
+  try {
+    await quiz.findByIdAndDelete({ _id: quizId });
+    await Question.deleteMany({ QuizId: quizId });
+    return res.redirect(`/quiz`);
+  } catch (error) {
+    return res.send("Failed to Delete!");
+  }
+}
+
+async function handleDeleteQuestionById(req, res) {
+  const quizId = req.params.quiz_id;
+  const quesId = req.params.ques_id;
+
+  try {
+    await quiz.updateOne(
+      { _id: quizId },
+      {
+        $pull: {
+          questionsById: { questionId: quesId },
+        },
+      }
+    );
+    await Question.findOneAndDelete({ _id: quesId });
+  } catch (error) {
+    console.log(error);
+  }
+  res.redirect(`/quiz/${quizId}`);
+}
+
 module.exports = {
   handleGetAllQuizzesAndDisplay,
   handleCreateNewQuiz,
   handleGetQuizByIdAndshowQuestions,
   handleAddQuestionsInTheQuiz,
+  handleDeleteQuizById,
+  handleDeleteQuestionById,
 };
