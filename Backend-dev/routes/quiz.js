@@ -1,14 +1,16 @@
 const { Router } = require("express");
+const quiz = require("../models/quizzes");
+
 const {
-  handleCreateNewQuiz, handleGetQuizById,
+  handleCreateNewQuiz,
+  handleGetQuizByIdAndshowQuestions,
+  handleAddQuestionsInTheQuiz,
+  handleGetAllQuizzesAndDisplay,
 } = require("../controllers/quiz");
+
 const router = Router();
 
-// Display all Quizzes created By the User
-// router.get("/", async (req, res) => {
-//   const resultQuiz = await quiz.find({createdBy: req.user._id});
-//   return res.render("Create-Quiz", { resultQuiz });
-// });
+router.get("/", handleGetAllQuizzesAndDisplay);
 
 router.get("/create-quiz", (req, res) => {
   return res.render("create-quiz");
@@ -16,6 +18,8 @@ router.get("/create-quiz", (req, res) => {
 
 router.post("/create-quiz", handleCreateNewQuiz);
 
-router.get("/:quiz_id", handleGetQuizById);
+router.get("/:quiz_id", handleGetQuizByIdAndshowQuestions);
+
+router.post("/edit/:quiz_id", handleAddQuestionsInTheQuiz);
 
 module.exports = router;

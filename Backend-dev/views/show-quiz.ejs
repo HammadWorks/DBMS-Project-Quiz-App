@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Show Quiz</title>
+  </head>
+  <body>
+    <button><a href="/quiz/create-quiz">Create Quiz</a></button>
+    <% quizzes.forEach(quiz => { %>
+    <div>
+      <ul>
+        <li>Title: <%= quiz.title %></li>
+        <li>Description: <%= quiz.description %></li>
+        <li>CreatedBy: <%= quiz.createdBy.fullName %></li>
+        <li><a href="/quiz/<%= quiz._id %>">Click To Show</a></li>
+      </ul>
+    </div>
+    <% }) %>
+  </body>
+</html>

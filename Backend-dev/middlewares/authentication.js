@@ -13,6 +13,12 @@ function verifyTokenMiddleWareForAuthentication(cookieName) {
   };
 }
 
+function userLoginCheck(req, res, next) {
+  if (!req.user) return res.redirect("/user/signup");
+  next();
+}
+
 module.exports = {
   verifyTokenMiddleWareForAuthentication,
+  userLoginCheck,
 };

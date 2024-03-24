@@ -2,6 +2,7 @@ const { Router } = require("express");
 const {
   handleSignInRequest,
   handleSignUpRequest,
+  handleLogoutRequest,
 } = require("../controllers/user");
 const router = Router();
 
@@ -17,8 +18,6 @@ router.get("/signup", (req, res) => {
 
 router.post("/signup", handleSignUpRequest);
 
-router.get("/logout", (req, res) => {
-  return res.clearCookie("token").redirect("/");
-});
+router.get("/logout", handleLogoutRequest);
 
 module.exports = router;

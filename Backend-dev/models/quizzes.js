@@ -15,7 +15,17 @@ const quizSchema = new Schema(
       ref: "user",
       required: true,
     },
-    interactionHistory: [{ type: Schema.Types.ObjectId, ref: "user" }],
+    questionsById: [
+      {
+        questionId: { type: Schema.Types.ObjectId, ref: "question" },
+      },
+    ],
+    interactionHistory: [
+      {
+        userId: { type: Schema.Types.ObjectId, ref: "user" },
+        timestamps: { type: Number },
+      },
+    ],
   },
   { timestamps: true }
 );

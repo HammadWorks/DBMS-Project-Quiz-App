@@ -1,21 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
   <title>Create Quiz</title>
-  
+
   <body>
+    <% if (!locals.resultQuiz) { %>
     <h3>Create Quiz</h3>
     <form action="/quiz/create-quiz" method="post">
-      <input type="text" name="title" placeholder="Enter Title" required/>
-      <input type="text" name="description" placeholder="Enter Description" required/>
+      <input type="text" name="title" placeholder="Enter Title" required />
+      <input
+        type="text"
+        name="description"
+        placeholder="Enter Description"
+        required
+      />
       <button type="submit">Create</button>
     </form>
-    <% if (locals.resultQuiz) { %>
+
+    <% } else{ %>
     <div>
       <ul>
-        <li>Title: <%= resultQuiz.title %></li>
-        <li>Description: <%= resultQuiz.description %></li>
+        <li><b>Title: <%= resultQuiz.title %></b></li>
+        <li><b>Description: <%= resultQuiz.description %></b></li>
       </ul>
     </div>
-    <% } %>
+
+    <% if (locals.isCreator === true) { %>
+    <form
+      action="/quiz/edit/<%= quizId %>"
+      method="post"
+      style="
+        margin: 1px 20px;
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      "
+    >
+      <h3>Add Questions:</h3>
+      <input
+        type="text"
+        name="question"
+        placeholder="Enter question"
+        required
+      />
+      <input type="text" name="choice1" placeholder="Enter choice-1" required />
+      <input type="text" name="choice2" placeholder="Enter choice-2" required />
+      <input type="text" name="choice3" placeholder="Enter choice-3" required />
+      <input type="text" name="choice4" placeholder="Enter choice-4" required />
+      <input
+        type="text"
+        name="correctChoice"
+        placeholder="Enter correct-choice"
+        required
+      />
+      <input type="text" name="points" placeholder="Enter points" />
+      <button type="submit">submit</button>
+    </form>
+
+    <% } %> <% if (locals.questions) { %> <% questions.forEach(q => { %>
+
+    <ul>
+      <li><b>Question: <%= q.questionId.question %></b></li>
+      <li>Choice-1: <%= q.questionId.choices[0] %></li>
+      <li>Choice-2: <%= q.questionId.choices[1] %></li>
+      <li>Choice-3: <%= q.questionId.choices[2] %></li>
+      <li>Choice-4: <%= q.questionId.choices[3] %></li>
+    </ul>
+
+    <% }) %> <% } %> <%}%>
   </body>
 </html>

@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <title>Quiz App</title>
-  <%- include('./components/head') %>
+  <%- include('./components/head',{title: "Quiz App"}) %>
 
   <body>
     <main>
-      <%- include('./components/navbar') %>
-
       <!-- This is the Home Page  -->
+      <div>
+        <ul>
+          <li><a href="/quiz">Show Quizzes</a></li>
+        </ul>
+        <ul>
+          <li><a href="/quiz/create-quiz">Create Quiz</a></li>
+        </ul>
+        <a href="/user/signup">Sign Up</a>
+        <ul>
+          <li><a href="/user/logout">Logout</a></li>
+        </ul>
+      </div>
       <%- include('./components/footer') %>
     </main>
   </body>
