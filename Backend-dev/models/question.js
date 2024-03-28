@@ -25,6 +25,14 @@ const questionSchema = new Schema({
   },
 });
 
+questionSchema.pre("save", function (next) {
+  const thisQuiz = this;
+  console.log(thisQuiz._id);
+  if (!thisQuiz.choices.includes(thisQuiz.correctChoice))
+    throw new Error("Correct Choice Not Matched?");
+  next();
+});
+
 const Question = model("question", questionSchema);
 
 module.exports = Question;

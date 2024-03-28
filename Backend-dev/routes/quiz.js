@@ -1,5 +1,4 @@
 const { Router } = require("express");
-const quiz = require("../models/quizzes");
 
 const {
   handleCreateNewQuiz,
@@ -8,6 +7,8 @@ const {
   handleGetAllQuizzesAndDisplay,
   handleDeleteQuizById,
   handleDeleteQuestionById,
+  handlePlayQuizRequest,
+  handlePostPlayQuizByQuestionId,
 } = require("../controllers/quiz");
 
 const router = Router();
@@ -24,8 +25,12 @@ router.get("/:quiz_id", handleGetQuizByIdAndshowQuestions);
 
 router.post("/edit/:quiz_id", handleAddQuestionsInTheQuiz);
 
-router.get("/delete/:quiz_id",handleDeleteQuizById)
+router.get("/delete/:quiz_id", handleDeleteQuizById);
 
-router.get("/delete/question/:quiz_id/:ques_id",handleDeleteQuestionById)
+router.get("/delete/question/:quiz_id/:ques_id", handleDeleteQuestionById);
+
+router.get("/play/:quiz_id", handlePlayQuizRequest);
+
+router.post("/play/:quiz_id", handlePostPlayQuizByQuestionId);
 
 module.exports = router;

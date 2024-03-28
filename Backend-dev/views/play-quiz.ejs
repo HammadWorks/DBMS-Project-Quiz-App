@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Play Quiz</title>
+  </head>
+  <body>
+    <div id="quizId" style="display: none"><%= quizId %></div>
+    <button><a href="/quiz">Show All Quiz</a></button>
+    <ul>
+      <li id="question"><b>question</b></li>
+      <li>
+        <input type="radio" name="answer" id="inChoices" />
+        <label for="choice1" id="choice1">choice1</label>
+      </li>
+      <li>
+        <input type="radio" name="answer" id="inChoices" />
+        <label for="choice2" id="choice2">choice2</label>
+      </li>
+      <li>
+        <input type="radio" name="answer" id="inChoices" />
+        <label for="choice3" id="choice3">choice3</label>
+      </li>
+      <li>
+        <input type="radio" name="answer" id="inChoices" />
+        <label for="choice4" id="choice4">choice4</label>
+      </li>
+      <li id="points">points</li>
+      <button onclick="nextQues()">Submit</button>
+    </ul>
+    <script>
+      const quizId = document.getElementById("quizId").innerText;
+      async function getQuestions() {
+        const response = await fetch(
+          `http://localhost:8000/quiz/play/${quizId}`,
+          {
+            method: "POST",
+            mode: "cors",
+            referrerPolicy: "no-referrer",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const questions = await response.json();
+        // console.log(questions);
+        return questions;
+      }
+
+      const question = document.getElementById("question");
+      const points = document.getElementById("points");
+      const choice1 = document.getElementById("choice1");
+      const choice2 = document.getElementById("choice2");
+      const choice3 = document.getElementById("choice3");
+      const choice4 = document.getElementById("choice4");
+
+      const inChoices = document.querySelectorAll("#inChoices");
+      let index = 0;
+      let score = 0;
+      let totalScore = 0;
+      let data = [];
+
+      function displayQuestion() {
+        question.innerText = data[index].question;
+        choice1.innerHTML = data[index].choices[0];
+        choice2.innerHTML = data[index].choices[1];
+        choice3.innerHTML = data[index].choices[2];
+        choice4.innerHTML = data[index].choices[3];
+        points.innerText = data[index].points;
+      }
+
+      function nextQues() {
+        let answer = "";
+
+        inChoices.forEach((e) => {
+          if (e.checked) {
+            answer = e.nextElementSibling.innerHTML;
+          }
+        });
+
+        if (answer == data[index].correctChoice) {
+          score += Number(data[index].points);
+          totalScore += Number(data[index].points);
+        } else {
+          totalScore += Number(data[index].points);
+        }
+
+        if (index >= data.length - 1) {
+          alert("Quiz Completed!\nScore: " + score + "/" + totalScore);
+          index = 0;
+          displayQuestion(index);
+          // localStorage.setItem("UserScore", score);
+          // localStorage.setItem("QuizId", data[index - 1].QuizId);
+        } else {
+          index++;
+          displayQuestion(index);
+        }
+      }
+
+      async function main() {
+        data = await getQuestions();
+        console.log(data);
+
+        displayQuestion(index);
+      }
+      main();
+    </script>
+  </body>
+</html>

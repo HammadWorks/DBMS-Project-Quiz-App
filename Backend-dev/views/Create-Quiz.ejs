@@ -3,6 +3,7 @@
   <title>Create Quiz</title>
 
   <body>
+    <button><a href="/quiz">Show All Quiz</a></button>
     <% if (!locals.resultQuiz) { %>
     <h3>Create Quiz</h3>
     <form action="/quiz/create-quiz" method="post">
@@ -17,6 +18,7 @@
     </form>
 
     <% } else{ %>
+    <button><a href="/quiz/play/<%= quizId %>">Play Quiz</a></button>
     <div>
       <ul>
         <li><b>Title: <%= resultQuiz.title %></b></li>
@@ -31,7 +33,7 @@
       method="post"
       style="
         margin: 1px 20px;
-        width: 200px;
+        width: 500px;
         display: flex;
         flex-direction: column;
         gap: 5px;
@@ -40,21 +42,47 @@
       <h3>Add Questions:</h3>
       <input
         type="text"
+        id="question"
         name="question"
         placeholder="Enter question"
         required
       />
-      <input type="text" name="choice1" placeholder="Enter choice-1" required />
-      <input type="text" name="choice2" placeholder="Enter choice-2" required />
-      <input type="text" name="choice3" placeholder="Enter choice-3" required />
-      <input type="text" name="choice4" placeholder="Enter choice-4" required />
       <input
         type="text"
+        id="choice1"
+        name="choice1"
+        placeholder="Enter choice-1"
+        required
+      />
+      <input
+        type="text"
+        id="choice2"
+        name="choice2"
+        placeholder="Enter choice-2"
+        required
+      />
+      <input
+        type="text"
+        id="choice3"
+        name="choice3"
+        placeholder="Enter choice-3"
+        required
+      />
+      <input
+        type="text"
+        id="choice4"
+        name="choice4"
+        placeholder="Enter choice-4"
+        required
+      />
+      <input
+        type="text"
+        id="correctChoice"
         name="correctChoice"
         placeholder="Enter correct-choice"
         required
       />
-      <input type="text" name="points" placeholder="Enter points" />
+      <input type="text" id="points" name="points" placeholder="Enter points" />
       <button type="submit">submit</button>
     </form>
 
@@ -72,9 +100,32 @@
           >Remove Question</a
         >
       </button>
+      <button onclick="onEdit(this)">Edit</button>
       <%}%>
     </ul>
 
     <% }) %> <% } %> <%}%>
   </body>
+  <script>
+    const question = document.getElementById("question");
+    const choice1 = document.getElementById("choice1");
+    const choice2 = document.getElementById("choice2");
+    const choice3 = document.getElementById("choice3");
+    const choice4 = document.getElementById("choice4");
+    const correctChoice = document.getElementById("correctChoice");
+    const points = document.getElementById("points");
+
+    function onEdit(e) {
+      question.value =
+        e.parentElement.children[0].innerText.split("Question: ")[1];
+      choice1.value =
+        e.parentElement.children[1].innerText.split("Choice-1: ")[1];
+      choice2.value =
+        e.parentElement.children[2].innerText.split("Choice-2: ")[1];
+      choice3.value =
+        e.parentElement.children[3].innerText.split("Choice-3: ")[1];
+      choice4.value =
+        e.parentElement.children[4].innerText.split("Choice-4: ")[1];
+    }
+  </script>
 </html>

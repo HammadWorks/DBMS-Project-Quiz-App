@@ -58,11 +58,14 @@ async function handleGetQuizByIdAndshowQuestions(req, res) {
 
 async function handleAddQuestionsInTheQuiz(req, res) {
   const quest = req.body;
-
+  const choices = [quest.choice1, quest.choice2, quest.choice3, quest.choice4];
+  if (!choices.includes(quest.correctChoice)) {
+    return res.redirect(`/quiz/${req.params.quiz_id}`);
+  }
   const resultQues = await Question.create({
     QuizId: req.params.quiz_id,
     question: quest.question,
-    choices: [quest.choice1, quest.choice2, quest.choice3, quest.choice4],
+    choices: choices,
     correctChoice: quest.correctChoice,
     points: quest.points,
   });
@@ -110,6 +113,22 @@ async function handleDeleteQuestionById(req, res) {
   res.redirect(`/quiz/${quizId}`);
 }
 
+async function handlePlayQuizRequest(req, res) {
+  // if (localStorage.length != 0) {
+  //   const score = localStorage.getItem("UserScore");
+  //   const QuizId = localStorage.getItem("QuizId");
+  //   console.log(score, QuizId);
+  //   localStorage.clear();
+  // }
+
+  res.render("play-quiz", { quizId: req.params.quiz_id });
+}
+
+async function handlePostPlayQuizByQuestionId(req, res) {
+  const playQues = await Question.find({ QuizId: req.params.quiz_id });
+  return res.json(playQues);
+}
+
 module.exports = {
   handleGetAllQuizzesAndDisplay,
   handleCreateNewQuiz,
@@ -117,4 +136,6 @@ module.exports = {
   handleAddQuestionsInTheQuiz,
   handleDeleteQuizById,
   handleDeleteQuestionById,
+  handlePlayQuizRequest,
+  handlePostPlayQuizByQuestionId,
 };
