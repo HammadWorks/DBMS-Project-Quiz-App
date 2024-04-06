@@ -9,11 +9,14 @@ const {
   handleDeleteQuestionById,
   handlePlayQuizRequest,
   handlePostPlayQuizByQuestionId,
+  handleGenerateQuizs,
 } = require("../controllers/quiz");
 
 const router = Router();
 
 router.get("/", handleGetAllQuizzesAndDisplay);
+
+router.get("/generate", handleGenerateQuizs);
 
 router.get("/create-quiz", (req, res) => {
   return res.render("create-quiz");

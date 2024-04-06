@@ -8,6 +8,17 @@
   <body>
     <button><a href="/">Home</a></button>
     <button><a href="/quiz/create-quiz">Create Quiz</a></button>
+    <form action="/quiz/generate" method="get">
+      <input
+        type="text"
+        name="promt"
+        placeholder="Enter Prompt Here...."
+        required
+      />
+      <input type="text" name="description" placeholder="Enter Description" />
+      <input type="number" name="points" placeholder="Enter Points of each Question" />
+      <input type="submit" value="Generate Quiz" />
+    </form>
     <% quizzes.forEach(quiz => { %>
     <div>
       <ul>
