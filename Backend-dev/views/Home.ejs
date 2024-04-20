@@ -1,23 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz - Home</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        height: 100vh;
+        /* width: 100vw; */
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+        color: white;
+      }
+      .btn{
+        padding: 8px 10px;
+        background: linear-gradient(
+          to right,
+          rgb(55, 103, 215),
+          rgb(220, 69, 220)
+        );
+        border: 2px solid;
+        border-radius: 5px;
+        text-align: center;
+        width: 100px;
+      }
+      .btn a{
+        text-decoration: none;
+        color: white;
+      }
+    </style>
+  </head>
   <body>
     <main>
       <!-- This is the Home Page  -->
       <div>
         <ul>
-          <li><a href="/quiz">Show Quizzes</a></li>
+          <li class="btn"><a href="/quiz">Show Quizzes</a></li>
         </ul>
         <ul>
-          <li><a href="/quiz/create-quiz">Create Quiz</a></li>
+          <li class="btn"><a href="/quiz/create-quiz">Create Quiz</a></li>
         </ul>
 
         <% if (!locals.user) { %>
         <ul>
-          <li><a href="/user/signup">Sign Up</a></li>
+          <li class="btn"><a href="/user/signup">Sign Up</a></li>
         </ul>
         <% } else { %>
         <ul>
-          <li><a href="/user/logout">Logout</a></li>
+          <li class="btn"><a href="/user/logout">Logout</a></li>
         </ul>
         <% } %>
       </div>

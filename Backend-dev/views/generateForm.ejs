@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generate Quiz</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+
+      header {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 60px;
+        justify-content: space-between;
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+      }
+
+      .logo-button {
+        border-style: none;
+        border-radius: 2px;
+        color: white;
+        padding: 7px 22px;
+        background: linear-gradient(
+          to right,
+          rgb(79, 0, 216),
+          rgb(100, 36, 209)
+        );
+      }
+
+      .logo-button a {
+        text-decoration: none;
+        color: white;
+      }
+
+      .rightside {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+      }
+
+      .header-button {
+        border-style: none;
+        border-radius: 2px;
+        color: white;
+        padding: 7px 22px;
+        background: transparent;
+      }
+
+      .header-button a {
+        text-decoration: none;
+        color: white;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+      }
+
+      .outer-box {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        align-items: center;
+        justify-content: space-between;
+        top: 80px;
+        bottom: 80px;
+        height: 550px;
+        width: 90%;
+        background: linear-gradient(
+          to right,
+          rgb(55, 103, 215),
+          rgb(220, 69, 220)
+        );
+        padding: 40px 20px;
+        border-radius: 15px;
+      }
+
+      .box-head {
+        font-size: xx-large;
+        color: white;
+        margin-bottom: 30px;
+      }
+
+      .prompt-box {
+        background-color: white;
+        height: 25%;
+        width: 450px;
+        display: flex;
+        flex-direction: column;
+        padding: 15px 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+
+      .question {
+        font-size: small;
+        font-weight: 500;
+        margin-right: 10px;
+      }
+
+      .prompt-input {
+        margin-top: 10px;
+        height: 100%;
+        resize: none;
+        outline: none;
+        border: none;
+      }
+
+      .normal-box {
+        background-color: white;
+        width: 450px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 15px 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+
+      .title-input,
+      .description-input,
+      .point-input {
+        outline: none;
+        border: none;
+      }
+
+      .generate-button {
+        padding: 15px 40px;
+        background-color: rgb(34, 222, 62);
+        border-radius: 8px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      footer {
+        position: absolute;
+        display: flex;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 13px;
+        background: linear-gradient(
+          to right,
+          rgb(55, 103, 215),
+          rgb(220, 69, 220)
+        );
+        justify-content: center;
+      }
+
+      .reserve-rights {
+        font-size: small;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="logo-button">
+        <a href="/">Logo</a>
+      </div>
+      <div class="rightside">
+        <div>
+          <button class="header-button">
+            <a href="/user/logout">Logout</a>
+          </button>
+        </div>
+        <div>
+          <button class="header-button">
+            <a href="/quiz">Quizzes</a>
+          </button>
+        </div>
+      </div>
+    </header>
+    <form action="/quiz/generate" method="post" class="outer-box">
+      <div class="box-head">Generate Quiz</div>
+      <div class="prompt-box">
+        <!-- <div class="question">Enter the Prompt</div> -->
+        <textarea
+          placeholder="Enter the Prompt"
+          name="prompt"
+          class="prompt-input"
+        ></textarea>
+      </div>
+      <div class="normal-box">
+        <!-- <div class="question">Enter the title</div> -->
+        <input
+          placeholder="Enter the Title"
+          name="title"
+          class="title-input"
+        />
+      </div>
+      <div class="normal-box">
+        <!-- <div class="question">Enter the Description</div> -->
+        <input
+          placeholder="Enter the Description"
+          name="description"
+          class="description-input"
+        />
+      </div>
+      <div class="normal-box">
+        <!-- <div class="question">Enter the Points</div> -->
+        <input
+          placeholder="Enter the Points"
+          name="points"
+          class="point-input"
+        />
+      </div>
+      <button type="submit" class="generate-button">Generate</button>
+    </form>
+    <footer>
+      <a class="reserve-rights"> All Rights Reserved | abcd@gmail.com </a>
+    </footer>
+  </body>
+</html>

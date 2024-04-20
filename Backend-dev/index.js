@@ -7,7 +7,8 @@ const QuizRoute = require("./routes/quiz");
 
 const { connectToMongoDB } = require("./connect");
 const {
-  verifyTokenMiddleWareForAuthentication, userLoginCheck,
+  verifyTokenMiddleWareForAuthentication,
+  userLoginCheck,
 } = require("./middlewares/authentication");
 
 const app = express();
@@ -23,17 +24,18 @@ connectToMongoDB("mongodb://127.0.0.1:27017/DBMS-Project").then(() => {
 });
 
 // Middlewares
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(verifyTokenMiddleWareForAuthentication("token"));
 
 // Routes
 app.get("/", (req, res) => {
-  return res.render("Home",{user: req.user});
+  return res.render("Home", { user: req.user });
 });
 
 app.use("/user", UserRoute);
-app.use("/quiz",userLoginCheck, QuizRoute);
+app.use("/quiz", userLoginCheck, QuizRoute);
 
 // Server Listen
 app.listen(PORT, () => {

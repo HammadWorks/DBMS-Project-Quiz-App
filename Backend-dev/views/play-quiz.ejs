@@ -28,6 +28,9 @@
       </li>
       <li id="points">points</li>
       <button onclick="nextQues()">Submit</button>
+      <button id="leaderboard" style="display: none">
+        <a href="leaderboard/<%= quizId %>">Show Leaderboard</a>
+      </button>
     </ul>
     <script>
       const quizId = document.getElementById("quizId").innerText;
@@ -54,14 +57,28 @@
       const choice2 = document.getElementById("choice2");
       const choice3 = document.getElementById("choice3");
       const choice4 = document.getElementById("choice4");
+      const leaderboard = document.getElementById("leaderboard");
 
       const inChoices = document.querySelectorAll("#inChoices");
       let index = 0;
       let score = 0;
       let totalScore = 0;
       let data = [];
+      let Completed = false;
 
       function displayQuestion() {
+        if (Completed) {
+          const formData = { score, totalScore };
+          const response = fetch(
+            `http://localhost:8000/quiz/play/leaderboard/${quizId}`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(formData),
+            }
+          );
+          leaderboard.style.display = "block";
+        }
         question.innerText = data[index].question;
         choice1.innerHTML = data[index].choices[0];
         choice2.innerHTML = data[index].choices[1];
@@ -70,7 +87,7 @@
         points.innerText = data[index].points;
       }
 
-      function nextQues() {
+      async function nextQues() {
         let answer = "";
 
         inChoices.forEach((e) => {
@@ -88,6 +105,7 @@
 
         if (index >= data.length - 1) {
           alert("Quiz Completed!\nScore: " + score + "/" + totalScore);
+          Completed = true;
           index = 0;
           displayQuestion(index);
           // localStorage.setItem("UserScore", score);
@@ -100,8 +118,7 @@
 
       async function main() {
         data = await getQuestions();
-        console.log(data);
-
+        // console.log(data);
         displayQuestion(index);
       }
       main();

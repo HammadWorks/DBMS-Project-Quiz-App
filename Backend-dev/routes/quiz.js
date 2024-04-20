@@ -10,16 +10,22 @@ const {
   handlePlayQuizRequest,
   handlePostPlayQuizByQuestionId,
   handleGenerateQuizs,
+  handlePostLeaderBoard,
+  handleGetLeaderBoardData,
 } = require("../controllers/quiz");
 
 const router = Router();
 
 router.get("/", handleGetAllQuizzesAndDisplay);
 
-router.get("/generate", handleGenerateQuizs);
+router.get("/generate", (req, res) => {
+  return res.render("generateForm");
+});
+
+router.post("/generate", handleGenerateQuizs);
 
 router.get("/create-quiz", (req, res) => {
-  return res.render("create-quiz");
+  return res.render("createForm");
 });
 
 router.post("/create-quiz", handleCreateNewQuiz);
@@ -35,5 +41,9 @@ router.get("/delete/question/:quiz_id/:ques_id", handleDeleteQuestionById);
 router.get("/play/:quiz_id", handlePlayQuizRequest);
 
 router.post("/play/:quiz_id", handlePostPlayQuizByQuestionId);
+
+router.get("/play/leaderboard/:quiz_id", handleGetLeaderBoardData);
+
+router.post("/play/leaderboard/:quiz_id",handlePostLeaderBoard);
 
 module.exports = router;

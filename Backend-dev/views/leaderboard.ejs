@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboard</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+
+      header {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 60px;
+        justify-content: space-between;
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+      }
+
+      .logo-button {
+        border-style: none;
+        border-radius: 2px;
+        color: white;
+        padding: 7px 22px;
+        background: linear-gradient(
+          to right,
+          rgb(79, 0, 216),
+          rgb(100, 36, 209)
+        );
+      }
+
+      .logo-button a {
+        text-decoration: none;
+        color: white;
+      }
+
+      .rightside {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+      }
+
+      .header-button {
+        border-style: none;
+        border-radius: 2px;
+        color: white;
+        padding: 7px 22px;
+        background: transparent;
+      }
+
+      .header-button a {
+        text-decoration: none;
+        color: white;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+      }
+
+      .outer-box {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        align-items: center;
+        top: 80px;
+        bottom: 80px;
+        height: 580px;
+        width: 700px;
+        background: linear-gradient(
+          to right,
+          rgb(55, 103, 215),
+          rgb(220, 69, 220)
+        );
+        padding: 30px 20px;
+        border-radius: 15px;
+      }
+
+      .box-head {
+        font-size: xx-large;
+        color: white;
+        margin-bottom: 20px;
+      }
+
+      .participant-box {
+        background-color: rgb(13, 0, 72);
+        color: white;
+        width: 450px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+      }
+
+      .box-title {
+        color: white;
+        margin-bottom: 15px;
+      }
+
+      .author-name {
+        color: white;
+        margin-bottom: 15px;
+      }
+
+      .index {
+        width: 25px;
+      }
+
+      .participants-name {
+        overflow-y: auto;
+        padding-right: 20px;
+        height: 2000px;
+      }
+
+      ::-webkit-scrollbar {
+        width: 20px;
+      }
+
+      ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px white;
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgb(100, 36, 209);
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(79, 0, 216);
+      }
+
+      .participant {
+        background-color: white;
+        color: black;
+        border-radius: 8px;
+        padding: 10px 15px;
+        flex: 1;
+        margin: 0 15px;
+      }
+
+      .total-users {
+        margin-top: 10px;
+        color: white;
+      }
+
+      footer {
+        position: absolute;
+        display: flex;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 13px;
+        background: linear-gradient(
+          to right,
+          rgb(55, 103, 215),
+          rgb(220, 69, 220)
+        );
+        justify-content: center;
+      }
+
+      .reserve-rights {
+        font-size: small;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="logo-button">
+        <a href="/">Logo</a>
+      </div>
+      <div class="rightside">
+        <div>
+          <button class="header-button">
+            <a href="/user/logout">Logout</a>
+          </button>
+        </div>
+        <div>
+          <button class="header-button">
+            <a href="/quiz">Quizzes</a>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="outer-box">
+      <div class="box-head">LeaderBoard</div>
+      <div class="box-title"><%= quizDetail.title %></div>
+      <div class="author-name">
+        Author: <%= quizDetail.createdBy.fullName %>
+      </div>
+      <% if (locals.result) { %>
+      <div class="participants-name">
+        <% result.participants.forEach((element , index) => { %>
+        <div class="participant-box">
+          <div class="index"><%= index + 1 %>.</div>
+          <div class="participant"><%= element.userName %></div>
+          <div class="points">
+            Points: <%= element.score %>/ <%= result.totalScore %>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <div class="total-users">
+        Total user Played: <%= result.participants.length %>
+      </div>
+    </div>
+    <% } else {%>
+      <div class="participants-name">
+        <div class="total-users">
+          Total user Played: 0
+        </div>
+      </div>
+      <% } %>
+    <footer>
+      <a class="reserve-rights"> All Rights Reserved | abcd@gmail.com </a>
+    </footer>
+  </body>
+</html>

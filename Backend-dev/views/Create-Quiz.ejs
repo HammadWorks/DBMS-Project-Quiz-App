@@ -7,7 +7,11 @@
     <button><a href="/quiz">Show All Quiz</a></button>
     <% if (!locals.resultQuiz) { %>
     <h3>Create Quiz</h3>
-    <form action="/quiz/create-quiz" method="post">
+    <form
+      style="display: flex; flex-direction: column; gap: 10px"
+      action="/quiz/create-quiz"
+      method="post"
+    >
       <input type="text" name="title" placeholder="Enter Title" required />
       <input
         type="text"
@@ -17,9 +21,29 @@
       />
       <button type="submit">Create</button>
     </form>
-
+    <h3>Generate Quiz</h3>
+    <form
+      style="display: flex; flex-direction: column; gap: 10px"
+      action="/quiz/generate"
+      method="get"
+    >
+      <input
+        type="text"
+        name="promt"
+        placeholder="Enter Prompt Here...."
+        required
+      />
+      <input type="text" name="description" placeholder="Enter Description" />
+      <input
+        type="number"
+        name="points"
+        placeholder="Enter Points of each Question"
+      />
+      <input type="submit" value="Generate Quiz" />
+    </form>
     <% } else{ %>
     <button><a href="/quiz/play/<%= quizId %>">Play Quiz</a></button>
+    <button><a href="/quiz/play/leaderboard/<%= quizId %>">LeaderBoard</a></button>
     <div>
       <ul>
         <li><b>Title: <%= resultQuiz.title %></b></li>
