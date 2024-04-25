@@ -32,7 +32,7 @@ router.post("/create-quiz", handleCreateNewQuiz);
 
 router.get("/:quiz_id", handleGetQuizByIdAndshowQuestions);
 
-router.post("/edit/:quiz_id", handleAddQuestionsInTheQuiz);
+router.post("/edit/:quiz_id", handleAddQuestionsInTheQuiz); // Pending...
 
 router.get("/delete/:quiz_id", handleDeleteQuizById);
 

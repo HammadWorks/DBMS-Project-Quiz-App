@@ -70,6 +70,7 @@ async function handleGetQuizByIdAndshowQuestions(req, res) {
 
 async function handleAddQuestionsInTheQuiz(req, res) {
   const quest = req.body;
+  console.log(quest)
   const choices = [quest.choice1, quest.choice2, quest.choice3, quest.choice4];
   if (!choices.includes(quest.correctChoice)) {
     return res.redirect(`/quiz/${req.params.quiz_id}`);
@@ -79,7 +80,7 @@ async function handleAddQuestionsInTheQuiz(req, res) {
     question: quest.question,
     choices: choices,
     correctChoice: quest.correctChoice,
-    points: quest.points,
+    points: Number(quest.points),
   });
 
   await quiz.findOneAndUpdate(
