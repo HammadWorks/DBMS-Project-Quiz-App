@@ -8,6 +8,7 @@ const leaderboardSchema = new Schema(
         userId: { type: Schema.Types.ObjectId, ref: "User" },
         userName: String,
         score: Number,
+        attempt: Number,
       },
     ],
     totalScore: { type: Number },

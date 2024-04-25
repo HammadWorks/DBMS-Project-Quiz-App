@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Generate Quiz</title>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
       * {
         padding: 0;
         margin: 0;
@@ -29,16 +30,20 @@
         border-radius: 2px;
         color: white;
         padding: 7px 22px;
-        background: linear-gradient(
+        /* background: linear-gradient(
           to right,
           rgb(79, 0, 216),
           rgb(100, 36, 209)
-        );
+        ); */
       }
 
       .logo-button a {
         text-decoration: none;
         color: white;
+        font-family: "Pacifico", cursive;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 20px;
       }
 
       .rightside {
@@ -53,6 +58,13 @@
         color: white;
         padding: 7px 22px;
         background: transparent;
+        font-size: 16px;
+        transition: all 0.01s ease-in-out;
+      }
+
+      .header-button a:hover {
+        text-decoration: underline 4px rgb(79, 0, 216);
+        /* color: rgb(79, 0, 216); */
       }
 
       .header-button a {
@@ -112,6 +124,7 @@
       .prompt-input {
         margin-top: 10px;
         height: 100%;
+        font-size: 16px;
         resize: none;
         outline: none;
         border: none;
@@ -133,6 +146,8 @@
       .point-input {
         outline: none;
         border: none;
+        width: 100%;
+        font-size: 16px;
       }
 
       .generate-button {
@@ -142,6 +157,11 @@
         border: none;
         font-weight: bold;
         cursor: pointer;
+        transition: all 0.1s ease-out;
+      }
+
+      .generate-button:hover {
+        transform: scale(1.1);
       }
 
       footer {
@@ -163,13 +183,68 @@
         font-size: small;
         color: white;
       }
+
+      .loader-container {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+        /* background-color: #f0f0f0; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .gear-loader {
+        animation: loader-animation 2s infinite;
+      }
+
+      .gear {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin: 20px;
+        position: relative;
+        border: 4px solid #ffffff;
+        border-left-color: #000000;
+      }
+
+      .gear-teeth {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background-color: #ffffff;
+      }
+
+      .loading-text {
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+
+      @keyframes loader-animation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
 
   <body>
     <header>
       <div class="logo-button">
-        <a href="/">Logo</a>
+        <a href="/">QuizQuest</a>
       </div>
       <div class="rightside">
         <div>
@@ -196,11 +271,7 @@
       </div>
       <div class="normal-box">
         <!-- <div class="question">Enter the title</div> -->
-        <input
-          placeholder="Enter the Title"
-          name="title"
-          class="title-input"
-        />
+        <input placeholder="Enter the Title" name="title" class="title-input" />
       </div>
       <div class="normal-box">
         <!-- <div class="question">Enter the Description</div> -->
@@ -218,10 +289,28 @@
           class="point-input"
         />
       </div>
-      <button type="submit" class="generate-button">Generate</button>
+      <button class="generate-button">Generate</button>
     </form>
     <footer>
       <a class="reserve-rights"> All Rights Reserved | abcd@gmail.com </a>
     </footer>
   </body>
+  <script>
+    const main = document.querySelector("body");
+    const submit = document.querySelector("form");
+
+    submit.addEventListener("submit", () => {
+      setTimeout(() => {
+        main.innerHTML = `<div class="loader-container">
+          <div class="gear-loader">
+            <div class="gear">
+              <div class="gear-teeth"></div>
+              </div>
+              </div>
+              <div class="loading-text">Loading...</div>
+              </div>`;
+      }, 100);
+      submit.submit();
+    });
+  </script>
 </html>

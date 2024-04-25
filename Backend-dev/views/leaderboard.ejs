@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Leaderboard</title>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
       * {
         padding: 0;
         margin: 0;
@@ -29,16 +30,20 @@
         border-radius: 2px;
         color: white;
         padding: 7px 22px;
-        background: linear-gradient(
+        /* background: linear-gradient(
           to right,
           rgb(79, 0, 216),
           rgb(100, 36, 209)
-        );
+        ); */
       }
 
       .logo-button a {
         text-decoration: none;
         color: white;
+        font-family: "Pacifico", cursive;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 20px;
       }
 
       .rightside {
@@ -53,6 +58,13 @@
         color: white;
         padding: 7px 22px;
         background: transparent;
+        font-size: 16px;
+        transition: all 0.01s ease-in-out;
+      }
+
+      .header-button a:hover {
+        text-decoration: underline 4px rgb(79, 0, 216);
+        /* color: rgb(79, 0, 216); */
       }
 
       .header-button a {
@@ -180,7 +192,7 @@
   <body>
     <header>
       <div class="logo-button">
-        <a href="/">Logo</a>
+        <a href="/">QuizQuest</a>
       </div>
       <div class="rightside">
         <div>

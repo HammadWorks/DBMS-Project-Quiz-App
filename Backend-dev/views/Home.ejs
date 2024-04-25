@@ -3,57 +3,268 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz - Home</title>
+    <title>QuizQuest - AI-Powered Learning Adventures!</title>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
       * {
         padding: 0;
         margin: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
       }
+
       body {
-        height: 100vh;
-        /* width: 100vw; */
+        position: relative;
         background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+      }
+
+      header {
+        position: static;
+        display: flex;
+        flex-direction: row;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 60px;
+        justify-content: space-between;
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+      }
+
+      .logo-button {
+        border-style: none;
+        border-radius: 2px;
+        color: white;
+        padding: 7px 22px;
+        /* background: linear-gradient(
+          to right,
+          rgb(79, 0, 216),
+          rgb(100, 36, 209)
+        ); */
+      }
+
+      .logo-button a {
+        text-decoration: none;
+        color: white;
+        font-family: "Pacifico", cursive;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 20px;
+      }
+
+      .rightside {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+      }
+
+      .header-button {
+        border-style: none;
+        border-radius: 2px;
+        color: white;
+        padding: 7px 22px;
+        background: transparent;
+        font-size: 16px;
+        transition: all 0.01s ease-in-out;
+      }
+
+      .header-button a:hover {
+        text-decoration: underline 4px rgb(79, 0, 216);
+        /* color: rgb(79, 0, 216); */
+      }
+
+      .header-button a {
+        text-decoration: none;
         color: white;
       }
-      .btn{
-        padding: 8px 10px;
+
+      .main-content {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-top: 80px;
+        margin-bottom: 0px;
+      }
+
+      .content-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 30%;
+      }
+
+      .content-header {
+        color: white;
+        margin-bottom: 20px;
+      }
+
+      .content-para {
+        background: linear-gradient(
+          to right,
+          rgb(68, 234, 246),
+          rgb(40, 143, 233),
+          rgb(240, 28, 248),
+          rgb(255, 0, 225)
+        );
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        font-weight: bold;
+        font-size: 38px;
+        margin-bottom: 90px;
+      }
+
+      .content-buttons {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .create-button-container {
+        width: 40%;
+        height: 60px;
+      }
+
+      .join-button-container {
+        width: 40%;
+        height: 60px;
+      }
+
+      .create-button {
+        padding: 10px 10px;
+        width: 100%;
+        height: 100%;
+        padding: 30;
+        color: white;
+        border-radius: 10px;
+        border: none;
+        font-size: 30px;
+        overflow: hidden;
+        background: linear-gradient(
+          to right,
+          rgb(255, 0, 225),
+          rgb(41, 7, 234)
+        );
+        cursor: pointer;
+        transition: all 0.1s ease-out;
+      }
+
+      .join-button {
+        padding: 10px 10px;
+        width: 100%;
+        height: 100%;
+        color: white;
+        border-radius: 10px;
+        border: none;
+        font-size: 30px;
+        overflow: hidden;
+        background: linear-gradient(
+          to right,
+          rgb(255, 0, 225),
+          rgb(68, 234, 246)
+        );
+        cursor: pointer;
+        transition: all 0.1s ease-out;
+      }
+
+      .join-button:hover {
+        transform: scale(1.1);
+      }
+
+      .create-button:hover {
+        transform: scale(1.1);
+      }
+
+      .join-button a {
+        text-decoration: none;
+        color: white;
+      }
+
+      .create-button a {
+        text-decoration: none;
+        color: white;
+      }
+
+      .img-container {
+        width: 40%;
+      }
+
+      .boy-photo {
+        width: 40%;
+        position: absolute;
+        top: 118px;
+        right: 170px;
+      }
+
+      footer {
+        position: fixed;
+        display: flex;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 13px;
         background: linear-gradient(
           to right,
           rgb(55, 103, 215),
           rgb(220, 69, 220)
         );
-        border: 2px solid;
-        border-radius: 5px;
-        text-align: center;
-        width: 100px;
+        justify-content: center;
       }
-      .btn a{
-        text-decoration: none;
+
+      .reserve-rights {
+        font-size: small;
         color: white;
       }
     </style>
   </head>
-  <body>
-    <main>
-      <!-- This is the Home Page  -->
-      <div>
-        <ul>
-          <li class="btn"><a href="/quiz">Show Quizzes</a></li>
-        </ul>
-        <ul>
-          <li class="btn"><a href="/quiz/create-quiz">Create Quiz</a></li>
-        </ul>
 
-        <% if (!locals.user) { %>
-        <ul>
-          <li class="btn"><a href="/user/signup">Sign Up</a></li>
-        </ul>
-        <% } else { %>
-        <ul>
-          <li class="btn"><a href="/user/logout">Logout</a></li>
-        </ul>
-        <% } %>
+  <body>
+    <header>
+      <div class="logo-button">
+        <a href="/">QuizQuest</a>
       </div>
-    </main>
+      <div class="rightside">
+        <% if (!locals.user) { %>
+        <div>
+          <button class="header-button">
+            <a href="/user/signup">Signup</a>
+          </button>
+        </div>
+        <% } else { %>
+        <div>
+          <button class="header-button">
+            <a href="/user/logout">Logout</a>
+          </button>
+        </div>
+        <% } %>
+        <div>
+          <button class="header-button">
+            <a href="/quiz">Quizzes</a>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="main-content">
+      <div class="content-section">
+        <div class="content-header">AI-Powered Learning Adventures!</div>
+        <div class="content-para">
+          Discover Infinite Quizzes, Crafted by AI for Easy Learning. Dive In &
+          Explore!
+        </div>
+        <div class="content-buttons">
+          <div class="create-button-container">
+            <button class="create-button">
+              <a href="/quiz/create-quiz">Create</a>
+            </button>
+          </div>
+          <div class="join-button-container">
+            <button class="join-button"><a href="/quiz">Join</a></button>
+          </div>
+        </div>
+      </div>
+      <div class="img-container">
+        <img src="image.png" class="boy-photo" />
+      </div>
+    </div>
+    <footer>
+      <a class="reserve-rights"> All Rights Reserved | abcd@gmail.com </a>
+    </footer>
   </body>
 </html>

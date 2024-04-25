@@ -11,6 +11,7 @@
     referrerpolicy="no-referrer"
   />
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
     * {
       padding: 0;
       margin: 0;
@@ -31,9 +32,18 @@
     .logo-button {
       border-style: none;
       border-radius: 2px;
-      color: white;
       padding: 7px 22px;
-      background: linear-gradient(to right, rgb(79, 0, 216), rgb(100, 36, 209));
+      background: none;
+      /* background: linear-gradient(to right, rgb(79, 0, 216), rgb(100, 36, 209)); */
+    }
+    
+    .logo-button a {
+      color: white;
+      text-decoration: none;
+      font-family: "Pacifico", cursive;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 20px;
     }
 
     .buttons {
@@ -48,6 +58,18 @@
       color: white;
       padding: 7px 22px;
       background: transparent;
+      font-size: 16px;
+      transition: all 0.01s ease-in-out;
+    }
+
+    .header-button a {
+      text-decoration: none;
+      color: white;
+    }
+
+    .header-button a:hover {
+      text-decoration: underline 4px rgb(79, 0, 216);
+      /* color: rgb(79, 0, 216); */
     }
 
     body {

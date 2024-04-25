@@ -1,135 +1,401 @@
 <!DOCTYPE html>
 <html lang="en">
-  <title>Create Quiz</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
 
-  <body>
-    <button><a href="/">Home</a></button>
-    <button><a href="/quiz">Show All Quiz</a></button>
-    <% if (!locals.resultQuiz) { %>
-    <h3>Create Quiz</h3>
-    <form
-      style="display: flex; flex-direction: column; gap: 10px"
-      action="/quiz/create-quiz"
-      method="post"
-    >
-      <input type="text" name="title" placeholder="Enter Title" required />
-      <input
-        type="text"
-        name="description"
-        placeholder="Enter Description"
-        required
-      />
-      <button type="submit">Create</button>
-    </form>
-    <h3>Generate Quiz</h3>
-    <form
-      style="display: flex; flex-direction: column; gap: 10px"
-      action="/quiz/generate"
-      method="get"
-    >
-      <input
-        type="text"
-        name="promt"
-        placeholder="Enter Prompt Here...."
-        required
-      />
-      <input type="text" name="description" placeholder="Enter Description" />
-      <input
-        type="number"
-        name="points"
-        placeholder="Enter Points of each Question"
-      />
-      <input type="submit" value="Generate Quiz" />
-    </form>
-    <% } else{ %>
-    <button><a href="/quiz/play/<%= quizId %>">Play Quiz</a></button>
-    <button><a href="/quiz/play/leaderboard/<%= quizId %>">LeaderBoard</a></button>
-    <div>
-      <ul>
-        <li><b>Title: <%= resultQuiz.title %></b></li>
-        <li><b>Description: <%= resultQuiz.description %></b></li>
-      </ul>
-    </div>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
 
-    <% if (locals.isCreator === true) { %>
-    <button><a href="/quiz/delete/<%= quizId %>">Delete Quiz</a></button>
-    <form
-      action="/quiz/edit/<%= quizId %>"
-      method="post"
-      style="
-        margin: 1px 20px;
-        width: 500px;
+      ::-webkit-scrollbar {
+        width: 20px;
+        background: black;
+      }
+      
+      ::-webkit-scrollbar-track {
+        /* box-shadow: inset 0 0 5px white; */
+        /* border-radius: 10px; */
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgb(100, 36, 209);
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(79, 0, 216);
+      }
+
+      body {
+        height: 100vh;
+        width: 100%;
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+        overflow-y: scroll;
+      }
+
+      header {
+        /* position: absolute; */
+        display: flex;
+        flex-direction: row;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 60px;
+        justify-content: space-between;
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+      }
+
+      .logo-button {
+        border-style: none;
+        border-radius: 2px;
+        color: white;
+        padding: 7px 22px;
+        /* background: linear-gradient(
+          to right,
+          rgb(79, 0, 216),
+          rgb(100, 36, 209)
+        ); */
+      }
+
+      .logo-button a {
+        text-decoration: none;
+        color: white;
+        font-family: "Pacifico", cursive;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 20px;
+      }
+
+      .rightside {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+      }
+
+      .header-button {
+        border-style: none;
+        border-radius: 2px;
+        color: white;
+        padding: 7px 22px;
+        background: transparent;
+        font-size: 16px;
+        transition: all 0.01s ease-in-out;
+      }
+
+      .header-button a:hover {
+        text-decoration: underline 4px rgb(79, 0, 216);
+        /* color: rgb(79, 0, 216); */
+      }
+
+      .header-button a {
+        text-decoration: none;
+        color: white;
+      }
+
+      main {
+        margin: 15px 45px;
+        /* position: relative; */
+        background: linear-gradient(
+          to right,
+          rgb(55, 103, 215),
+          rgb(220, 69, 220)
+        );
+        height: auto;
+        width: 94%;
+        border-radius: 10px;
+        padding-bottom: 15px;
+      }
+
+      main .upper_content {
         display: flex;
         flex-direction: column;
-        gap: 5px;
-      "
-    >
-      <h3>Add Questions:</h3>
-      <input
-        type="text"
-        id="question"
-        name="question"
-        placeholder="Enter question"
-        required
-      />
-      <input
-        type="text"
-        id="choice1"
-        name="choice1"
-        placeholder="Enter choice-1"
-        required
-      />
-      <input
-        type="text"
-        id="choice2"
-        name="choice2"
-        placeholder="Enter choice-2"
-        required
-      />
-      <input
-        type="text"
-        id="choice3"
-        name="choice3"
-        placeholder="Enter choice-3"
-        required
-      />
-      <input
-        type="text"
-        id="choice4"
-        name="choice4"
-        placeholder="Enter choice-4"
-        required
-      />
-      <input
-        type="text"
-        id="correctChoice"
-        name="correctChoice"
-        placeholder="Enter correct-choice"
-        required
-      />
-      <input type="text" id="points" name="points" placeholder="Enter points" />
-      <button type="submit">submit</button>
-    </form>
+        align-items: center;
+        justify-content: center;
+      }
 
-    <% } %> <% if (locals.questions) { %> <% questions.forEach(q => { %>
+      .upper_content .start {
+        display: flex;
+        position: relative;
+      }
 
-    <ul>
-      <li><b>Question: <%= q.questionId.question %></b></li>
-      <li>Choice-1: <%= q.questionId.choices[0] %></li>
-      <li>Choice-2: <%= q.questionId.choices[1] %></li>
-      <li>Choice-3: <%= q.questionId.choices[2] %></li>
-      <li>Choice-4: <%= q.questionId.choices[3] %></li>
-      <% if (locals.isCreator === true) { %>
-      <button>
-        <a href="/quiz/delete/question/<%= quizId %>/<%= q.questionId._id %>"
-          >Remove Question</a
-        >
-      </button>
-      <button onclick="onEdit(this)">Edit</button>
-      <%}%>
-    </ul>
+      main .start .str {
+        margin: 20px;
+        width: 145px;
+        padding: 14px 0;
+        border-radius: 10px;
+        font-size: 18px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.1s ease-out;
+        color: #fff;
+        /* margin: 13px 30px 0px 30px; */
+        font-size: 14px;
+      }
 
-    <% }) %> <% } %> <%}%>
+      main .start .str:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+      }
+
+      main .start .play {
+        /* padding: 10px 15px 10px 10px; */
+        text-align: center;
+        border-radius: 5px;
+        background: linear-gradient(to right, #2363f1 50%, #23b5f1);
+      }
+
+      main .start .share {
+        /* padding: 10px 15px 10px 10px; */
+        text-align: center;
+        border-radius: 5px;
+        background: linear-gradient(
+          to right,
+          rgb(255, 0, 225),
+          rgb(68, 234, 246)
+        );
+      }
+
+      main .start .delete {
+        /* padding: 10px 15px 10px 10px; */
+        text-align: center;
+        border-radius: 5px;
+        background: linear-gradient(to right, #ea0f85, #7f12c2);
+      }
+
+      main .start span i {
+        margin: 0px 0px 0px 11px;
+      }
+
+      main .info {
+        margin-top: 25px;
+        width: 87vw;
+      }
+
+      main .info .common {
+        padding: 12px;
+        background: #fff;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        border-radius: 5px;
+        cursor: default;
+      }
+      main .info .second_info {
+        margin-top: 15px;
+      }
+      main .question {
+        margin: auto;
+        width: 88vw;
+      }
+      main .question .total {
+        margin-top: 30px;
+        color: white;
+      }
+      main .question ul {
+        display: flex;
+        justify-content: space-between;
+      }
+      main .question ul li {
+        list-style: none;
+      }
+      .question .Q_first {
+        margin-top: 15px;
+        background: rgb(13, 0, 72);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 10px;
+      }
+      .question .inside_1 ul {
+        margin: 20px;
+      }
+      .question .Q_first ul li {
+        color: #fff;
+      }
+      .question .inside {
+        display: flex;
+        align-items: center;
+        background: #fff;
+        width: 87vw;
+        margin: auto;
+        margin-top: 10px;
+        padding: 11px;
+        border-radius: 5px;
+        height: 40px;
+      }
+      .question .correct {
+        display: flex;
+        align-items: center;
+        width: 87vw;
+        margin: auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 11px;
+        border-radius: 5px;
+        height: 40px;
+        cursor: pointer;
+      }
+      .question .correct a {
+        text-decoration: none;
+        color: #fff;
+      }
+      .question .correct i {
+        color: #fff;
+        margin-left: 10px;
+      }
+      .question .Q_first .pad:hover {
+        cursor: default;
+        color: #fff;
+        background: #000;
+      }
+      footer {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        background: linear-gradient(
+          to right,
+          rgb(55, 103, 215),
+          rgb(220, 69, 220)
+        );
+        height: 50px;
+        width: 100%;
+      }
+
+      .btn {
+        margin: 0 20px;
+        width: 145px;
+        padding: 14px 0;
+        border-radius: 10px;
+        font-size: 18px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.1s ease-out;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .str a {
+        text-decoration: none;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo-button">
+        <a href="/">QuizQuest</a>
+      </div>
+      <div class="rightside">
+        <div>
+          <button class="header-button">
+            <a href="/user/logout">Logout</a>
+          </button>
+        </div>
+        <div>
+          <button class="header-button">
+            <a href="/quiz">Quizzes</a>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="upper_content">
+        <div class="start">
+          <div class="str play">
+            <a href="/quiz/play/<%= quizId %>"
+              ><span>Play Quiz</span>
+              <span><i class="fa-solid fa-play"></i></span
+            ></a>
+          </div>
+          <div class="str share">
+            <a href="/quiz/play/leaderboard/<%= quizId %>"
+              ><span>leaderboard</span>
+              <span><i class="fa-solid fa-share-from-square"></i></span
+            ></a>
+          </div>
+          <% if (isCreator) { %>
+          <div class="str delete">
+            <a href="/quiz/delete/<%= quizId %>"
+              ><span>Delete Quiz</span>
+              <span><i class="fa-solid fa-trash"></i></span
+            ></a>
+          </div>
+          <% } %>
+        </div>
+        <div class="info">
+          <div class="first_info common">
+            <b>Quiz Title : &nbsp;</b> <%= resultQuiz.title %>
+          </div>
+          <div class="second_info common">
+            <b> Description : &nbsp;</b> <%= resultQuiz.description %>
+          </div>
+        </div>
+      </div>
+      <div class="question">
+        <div class="total">
+          <ul>
+            <li>Questions :</li>
+            <li>Total Question : <%= questions.length | 0 %></li>
+          </ul>
+        </div>
+        <div class="new">
+          <% if (locals.questions) { %> <% questions.forEach((q , i) => { %>
+          <div class="Q_first">
+            <div class="inside_1">
+              <ul>
+                <li></li>
+                <li><%= i + 1 %> / <%= questions.length %></li>
+                <li>Point : <%= q.questionId.points %></li>
+              </ul>
+            </div>
+            <div class="inside pad">
+              <b> Question : &nbsp;</b> <%= q.questionId.question %>
+            </div>
+            <div class="inside pad">
+              <b>choice-1 : &nbsp;</b> <%= q.questionId.choices[0] %>
+            </div>
+            <div class="inside pad">
+              <b>choice-2 : &nbsp;</b> <%= q.questionId.choices[1] %>
+            </div>
+            <div class="inside pad">
+              <b>choice-3 : &nbsp;</b> <%= q.questionId.choices[2] %>
+            </div>
+            <div class="inside pad">
+              <b>choice-4 : &nbsp;</b> <%= q.questionId.choices[3] %>
+            </div>
+            <div class="correct">
+              <a>Show Answer </a
+              ><i id="eye" class="fa-regular fa-eye-slash"></i>
+            </div>
+            <div style="display: none" class="inside pad hidden">
+              <b>Answer : &nbsp;</b> <%= q.questionId.correctChoice %>
+            </div>
+          </div>
+          <% }) %> <% } %>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="footer">All Rights Reserve | abcd@gmail.com</div>
+    </footer>
   </body>
   <script>
     const question = document.getElementById("question");
@@ -139,6 +405,27 @@
     const choice4 = document.getElementById("choice4");
     const correctChoice = document.getElementById("correctChoice");
     const points = document.getElementById("points");
+
+    const showAnswer = document.querySelectorAll(".correct");
+    const eyes = document.getElementById("eye");
+
+    showAnswer.forEach((e) => {
+      e.addEventListener("click", () => {
+        console.log(e.lastElementChild);
+
+        const views = e.nextElementSibling;
+        const eye = e.lastElementChild;
+        if (views.style.display == "none") {
+          eye.classList.add("fa-eye");
+          eye.classList.remove("fa-eye-slash");
+          views.style.display = "flex";
+        } else {
+          views.style.display = "none";
+          eye.classList.add("fa-eye-slash");
+          eye.classList.remove("fa-eye");
+        }
+      });
+    });
 
     function onEdit(e) {
       question.value =

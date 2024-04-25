@@ -1,6 +1,7 @@
 const express = require("express");
-const path = require("path");
+const { resolve } = require("path");
 const cookieParser = require("cookie-parser");
+require("dotenv").config();
 
 const UserRoute = require("./routes/user");
 const QuizRoute = require("./routes/quiz");
@@ -12,18 +13,20 @@ const {
 } = require("./middlewares/authentication");
 
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT | 8000;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 // EJS Setup
 app.set("view engine", "ejs");
-app.set("views", path.resolve("./views"));
+app.set("views", resolve("./views"));
 
 // Connection to Database
-connectToMongoDB("mongodb://127.0.0.1:27017/DBMS-Project").then(() => {
+connectToMongoDB(MONGODB_URI).then(() => {
   console.log("MongoDB connected!");
 });
 
 // Middlewares
+app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

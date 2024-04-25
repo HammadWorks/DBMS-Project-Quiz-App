@@ -1,9 +1,13 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+require("dotenv").config();
+
 const Question = require("../models/question");
 const quiz = require("../models/quizzes");
 const leaderboard = require("../models/leaderboard");
 
-const genAI = new GoogleGenerativeAI("AIzaSyB2usJIyrDsQiczrHCWo3hBreCNh-Uida4");
+const API_KEY = process.env.API_KEY;
+
+const genAI = new GoogleGenerativeAI(API_KEY);
 
 async function handleGetAllQuizzesAndDisplay(req, res) {
   const quizzes = await quiz.find({}).populate("createdBy");
@@ -95,6 +99,7 @@ async function handleDeleteQuizById(req, res) {
   try {
     await quiz.findByIdAndDelete({ _id: quizId });
     await Question.deleteMany({ QuizId: quizId });
+    await leaderboard.findOneAndDelete({ quizId: quizId });
     return res.redirect(`/quiz`);
   } catch (error) {
     return res.send("Failed to Delete!");
@@ -199,7 +204,6 @@ async function handlePostLeaderBoard(req, res) {
     });
   }
 
-  // console.log(req.body, req.user);
   const result = await leaderboard.findOneAndUpdate(
     { quizId: req.params.quiz_id },
     {
@@ -208,11 +212,47 @@ async function handlePostLeaderBoard(req, res) {
           userId: req.user._id,
           userName: req.user.fullName,
           score: req.body.score,
+          attempt: 1,
         },
       },
       $set: { totalScore: req.body.totalScore },
     }
   );
+  // const data = await leaderboard.findOne({
+  //   "participants.userName": req.user.fullName,
+  // });
+  // const check = () => {
+  //   if (data.participants.attempt >= 1) {
+  //     return true;
+  //   } else return false;
+  // };
+
+  // console.log(check());
+
+  // // console.log(await leaderboard.findOne({ "participants.userName": req.user.fullName }));
+  // if (check()) {
+  //   await leaderboard.updateOne(
+  //     { participants: { $elemMatch: { userName: req.user.fullName } } },
+  //     { $set: { "participants.$.score": req.body.score, "participants.$.attemp": "participants.$.attemp" + 1} }
+  //   );
+  //   console.log("Updated..\n");
+  // } else {
+  //   const result = await leaderboard.findOneAndUpdate(
+  //     { quizId: req.params.quiz_id },
+  //     {
+  //       $push: {
+  //         participants: {
+  //           userId: req.user._id,
+  //           userName: req.user.fullName,
+  //           score: req.body.score,
+  //           attempt: 1,
+  //         },
+  //       },
+  //       $set: { totalScore: req.body.totalScore },
+  //     }
+  //   );
+  //   console.log("Added..");
+  // }
 
   return res.redirect(`/quiz/play/leaderboard/${req.params.quiz_id}`);
 }
@@ -225,7 +265,12 @@ async function handleGetLeaderBoardData(req, res) {
     .findOne({ _id: req.params.quiz_id })
     .populate("createdBy");
   // console.log(quizDetail);
-  result.participants = result.participants.sort((a, b) => b.score - a.score);
+  try {
+    if (result.participants)
+      result.participants = result.participants.sort(
+        (a, b) => b.score - a.score
+      );
+  } catch (error) {}
   // console.log(result);
 
   return res.render("leaderboard", { result, quizDetail });

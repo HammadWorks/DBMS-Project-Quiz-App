@@ -9,7 +9,7 @@ async function handleSignInRequest(req, res) {
     email: body.email,
     password: body.password,
   });
-  return res.send("Signin in Successfully");
+  return res.redirect("/");
 }
 
 async function handleSignUpRequest(req, res) {

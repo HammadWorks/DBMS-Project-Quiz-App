@@ -3,113 +3,318 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Show Quiz</title>
+    <title>All Quizzes</title>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
       * {
         padding: 0;
         margin: 0;
+        box-sizing: border-box;
       }
-      body {
-        height: 100vh;
-        /* width: 100vw; */
+
+      ::-webkit-scrollbar {
+        width: 20px;
+      }
+
+      ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px white;
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgb(100, 36, 209);
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(79, 0, 216);
+      }
+
+      header {
+        /* position: absolute; */
+        display: flex;
+        flex-direction: row;
+        /* top: 0;
+    left: 0;
+    right: 0; */
+        padding: 10px 60px;
+        width: 100vw;
+        justify-content: space-between;
         background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+      }
+
+      .logo-button {
+        border-style: none;
+        border-radius: 2px;
         color: white;
-      }
-      .btn{
-        padding: 8px 10px;
-        background: linear-gradient(
+        padding: 7px 22px;
+        /* background: linear-gradient(
           to right,
-          rgb(55, 103, 215),
-          rgb(220, 69, 220)
-        );
-        border: 2px solid;
-        border-radius: 5px;
-        text-align: center;
+          rgb(79, 0, 216),
+          rgb(100, 36, 209)
+        ); */
       }
-      .btn a{
+
+      .logo-button a {
+        text-decoration: none;
+        color: white;
+        font-family: "Pacifico", cursive;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 20px;
+      }
+
+      .rightside {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+      }
+
+      .header-button {
+        border-style: none;
+        border-radius: 2px;
+        color: white;
+        padding: 7px 22px;
+        background: transparent;
+        font-size: 16px;
+        transition: all 0.01s ease-in-out;
+      }
+
+      .header-button a {
         text-decoration: none;
         color: white;
       }
-      .generate-form {
+      .header-button a:hover {
+        text-decoration: underline 4px rgb(79, 0, 216);
+        /* color: rgb(79, 0, 216); */
+      }
+
+      body {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+        font-family: sans-serif;
+      }
+
+      footer {
+        position: absolute;
+        display: flex;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 13px;
         background: linear-gradient(
           to right,
           rgb(55, 103, 215),
           rgb(220, 69, 220)
         );
-        border: 2px solid;
-        border-radius: 5px;
+        justify-content: center;
+      }
+
+      .reserve-rights {
+        font-size: small;
+        color: white;
+      }
+
+      .main-container {
+        height: 100vh;
+        margin: 10px 0;
         display: flex;
         flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+        color: white;
+      }
+
+      .main-container h2 {
+        font-size: 34px;
+      }
+
+      .card-display-one {
+        /* height: 400px; */
+        width: 99.9vw;
+        /* border: 1px solid; */
+        padding: 20px 0;
+        margin-top: 30px;
+      }
+
+      .card-display-one h3 {
+        font-size: 28px;
+      }
+
+      .card-display-one .cards {
+        margin-top: 10px;
+        padding: 20px 14px;
+        display: flex;
+        /* justify-content: center; */
+        width: 100%;
+        gap: 14px;
+        overflow: auto;
+      }
+
+      .cards a {
+        text-decoration: none;
+        color: white;
+      }
+
+      .quiz-card {
+        height: 300px;
+        min-width: 270px;
+        max-width: 270px;
+        border-radius: 10px;
+        background: rgb(99, 3, 255);
+        background: linear-gradient(
+          90deg,
+          rgba(74, 10, 104, 1) 0%,
+          rgba(99, 3, 255, 1) 100%
+        );
+        /* font-family: "Pacifico", cursive; */
+        font-family: cursive;
+        font-weight: 800;
+        font-style: normal;
+        cursor: pointer;
+        transform: scale(1);
+        transition: all 0.1s ease-out;
+      }
+
+      .quiz-card:hover {
+        transform: scale(1.09);
+      }
+
+      .quiz-card img {
+        object-fit: cover;
+        height: 150px;
+        width: 100%;
+        border-radius: 10px 10px 0px 0px;
+        background-color: aqua;
+      }
+
+      .card-details {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
         gap: 10px;
-        padding: 20px;
-        margin: 25px;
+        margin: 10px 0;
       }
-      .generate-form input {
-        padding: 4px;
-        border-radius: 5px;
-        border: 2px solid white;
-        background-color: rgb(100, 36, 209);
-        color: white;
-      }
-      .generate-form input::placeholder {
-        color: white;
-      }
-      .generate-submit-btn {
+      .card-details h4 {
+        font-size: 20px;
+        font-weight: 800;
         background-image: linear-gradient(
-          to right,
-          rgb(20, 94, 173),
-          rgb(55, 196, 243)
+          90deg,
+          rgba(131, 58, 180, 1) 0%,
+          rgba(253, 29, 29, 1) 50%,
+          rgba(252, 176, 69, 1) 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .card-details p:nth-child(3) {
+        font-size: 12px;
+      }
+
+      .btn {
+        margin: 0 20px;
+        width: 145px;
+        padding: 14px 0;
+        border-radius: 10px;
+        font-size: 18px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.1s ease-out;
+      }
+
+      .btn a {
+        text-decoration: none;
+        color: white;
+      }
+
+      .btn:hover {
+        transform: scale(1.1);
+      }
+
+      .btn-container {
+        margin: 20px 0;
+      }
+
+      .create-btn {
+        color: white;
+        background: linear-gradient(
+          90deg,
+          rgba(16, 96, 237, 1) 0%,
+          rgba(24, 197, 212, 1) 100%
         );
       }
-      .generate-submit-btn:hover {
-        background-image: linear-gradient(
-          to right,
-          rgb(20, 33, 173),
-          rgb(55, 243, 215)
+      .generate-btn {
+        color: white;
+        background: linear-gradient(
+          90deg,
+          rgba(95, 72, 231, 1) 0%,
+          rgba(8, 12, 31, 1) 100%
         );
       }
 
-      .quiz-card-container {
-        display: flex;
-        /* flex-direction: column; */
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 6px;
-      }
-      .quiz-card {
-        border-radius: 5px;
-        border: 2px solid white;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        padding: 20px;
-        width: 200px;
-        height: 200px;
-      }
-      .quiz-card ul {
-        list-style: none;
-      }
-      .card-btn{
-        width: 100px;
-        font-size: 14px;
+      .description {
+        height: 50px;
+        text-align: center;
+        width: 100%;
+        overflow: hidden;
       }
     </style>
   </head>
   <body>
-    <button class="btn home-btn"><a href="/">Home</a></button>
-    <button class="btn create-btn"><a href="/quiz/create-quiz">Create Quiz</a></button>
-    <button class="btn"><a href="/quiz/generate">Generate</a></button>
-    <div class="quiz-card-container">
-      <% quizzes.forEach(quiz => { %>
-      <div class="quiz-card">
-        <ul>
-          <li>Title: <%= quiz.title %></li>
-          <li>Description: <%= quiz.description %></li>
-          <li>CreatedBy: <%= quiz.createdBy.fullName %></li>
-          <li class="btn card-btn"><a href="/quiz/<%= quiz._id %>">Click To Show</a></li>
-        </ul>
+    <header>
+      <div class="logo-button">
+        <a href="/">QuizQuest</a>
       </div>
-      <% }) %>
+      <div class="rightside">
+        <div>
+          <button class="header-button">
+            <a href="/user/logout">Logout</a>
+          </button>
+        </div>
+        <div>
+          <button class="header-button">
+            <a href="/quiz">Quizzes</a>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-container">
+      <h2>All Quizzes</h2>
+      <div class="card-display-one">
+        <div class="cards">
+          <% quizzes.forEach(quiz => { %>
+          <a href="/quiz/<%= quiz._id %>" class="quiz-card">
+            <img src="cover-img.jpg" alt="" />
+            <div class="card-details">
+              <h4><%= quiz.title %></h4>
+              <p class="description"><%= quiz.description %></p>
+              <p>Created By: <%= quiz.createdBy.fullName %></p>
+            </div>
+          </a>
+          <% }) %>
+        </div>
+      </div>
+      <h3>Create Quiz</h3>
+      <div class="btn-container">
+        <button class="btn create-btn">
+          <a href="/quiz/create-quiz">Create</a>
+        </button>
+        <button class="btn generate-btn">
+          <a href="/quiz/generate">Generate</a>
+        </button>
+      </div>
     </div>
+
+    <footer>
+      <a class="reserve-rights"> All Rights Reserved | abcd@gmail.com </a>
+    </footer>
   </body>
 </html>

@@ -4,34 +4,375 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Play Quiz</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+
+      header {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 60px;
+        justify-content: space-between;
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+      }
+
+      .logo-button {
+        border-style: none;
+        border-radius: 2px;
+        color: white;
+        padding: 7px 22px;
+        /* background: linear-gradient(
+          to right,
+          rgb(79, 0, 216),
+          rgb(100, 36, 209)
+        ); */
+      }
+
+      .logo-button a {
+        text-decoration: none;
+        color: white;
+        font-family: "Pacifico", cursive;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 20px;
+      }
+
+      .rightside {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+      }
+
+      .header-button {
+        border-style: none;
+        border-radius: 2px;
+        color: white;
+        padding: 7px 22px;
+        background: transparent;
+        font-size: 16px;
+        transition: all 0.01s ease-in-out;
+      }
+
+      .header-button a:hover {
+        text-decoration: underline 4px rgb(79, 0, 216);
+        /* color: rgb(79, 0, 216); */
+      }
+
+      .header-button a {
+        text-decoration: none;
+        color: white;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+      }
+
+      .outer-box {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        align-items: center;
+        top: 80px;
+        bottom: 80px;
+        height: 550px;
+        width: 90%;
+        background: linear-gradient(
+          to right,
+          rgb(55, 103, 215),
+          rgb(220, 69, 220)
+        );
+        padding: 40px 20px;
+        border-radius: 15px;
+      }
+
+      .question-box {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(100, 36, 209);
+        color: white;
+        padding: 10px 12px;
+        width: 95%;
+        height: 125px;
+        border-radius: 10px;
+        font-size: medium;
+        font-weight: 600;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .question {
+        text-align: center;
+        font-size: 18px;
+        padding: 20px;
+        margin-top: 5px;
+        width: 98%;
+        height: 72px;
+        border-radius: 10px;
+        background-color: rgb(13, 0, 72);
+        color: white;
+      }
+
+      .option-box {
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .choice-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* padding-top: 10px 25px; */
+        border-radius: 10px;
+        height: 60px;
+        width: 140%;
+        /* width: 100%; */
+        background-color: rgb(100, 36, 209);
+        margin-top: 23px;
+      }
+
+      .choice {
+        width: 95%;
+        height: 60%;
+        border-radius: 10px;
+        vertical-align: middle;
+        color: white;
+        font-size: medium;
+        background-color: rgb(13, 0, 72);
+        padding: 10px 20px;
+      }
+
+      .lowest-box {
+        display: flex;
+        width: 95%;
+        justify-content: center;
+        /* justify-content: space-between; */
+        margin-top: 8px;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .prev-next-button {
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        height: 45px;
+        font-size: medium;
+        color: white;
+        background-image: linear-gradient(
+          to right,
+          rgb(20, 94, 173),
+          rgb(55, 196, 243)
+        );
+        cursor: pointer;
+      }
+
+      footer {
+        position: absolute;
+        display: flex;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 13px;
+        background: linear-gradient(
+          to right,
+          rgb(55, 103, 215),
+          rgb(220, 69, 220)
+        );
+        justify-content: center;
+      }
+
+      .reserve-rights {
+        font-size: small;
+        color: white;
+      }
+
+      .choice-box input {
+        margin-right: 10px;
+        display: none;
+      }
+
+      .display-points {
+        font-size: 14px;
+        position: absolute;
+        left: 22px;
+        top: 10px;
+      }
+
+      #question-index {
+        color: white;
+        font-size: 18px;
+        position: relative;
+        top: 11px;
+        left: 0px;
+        font-weight: 600;
+      }
+
+      #choice-1:checked ~ #choice1 {
+        background-color: limegreen;
+      }
+      #choice-2:checked ~ #choice2 {
+        background-color: limegreen;
+      }
+      #choice-3:checked ~ #choice3 {
+        background-color: limegreen;
+      }
+      #choice-4:checked ~ #choice4 {
+        background-color: limegreen;
+      }
+
+      .clock {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(13, 0, 72);
+        width: 103%;
+        height: 4px;
+        padding: 4px;
+        z-index: 1;
+        border-radius: 10px;
+        top: -33px;
+      }
+
+      .clock-bar {
+        display: block;
+        position: absolute;
+        border-radius: 10px;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background-color: aqua;
+        width: 0px;
+        z-index: 2;
+      }
+
+      .loader-container {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: linear-gradient(to right, rgb(13, 0, 72), rgb(108, 0, 108));
+        /* background-color: #f0f0f0; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .gear-loader {
+        animation: loader-animation 2s infinite;
+      }
+
+      .gear {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin: 20px;
+        position: relative;
+        border: 4px solid #ffffff;
+        border-left-color: #000000;
+      }
+
+      .gear-teeth {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background-color: #ffffff;
+      }
+
+      .loading-text {
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+
+      @keyframes loader-animation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
   </head>
+
   <body>
     <div id="quizId" style="display: none"><%= quizId %></div>
-    <button><a href="/quiz">Show All Quiz</a></button>
-    <ul>
-      <li id="question"><b>question</b></li>
-      <li>
-        <input type="radio" name="answer" id="inChoices" />
-        <label for="choice1" id="choice1">choice1</label>
-      </li>
-      <li>
-        <input type="radio" name="answer" id="inChoices" />
-        <label for="choice2" id="choice2">choice2</label>
-      </li>
-      <li>
-        <input type="radio" name="answer" id="inChoices" />
-        <label for="choice3" id="choice3">choice3</label>
-      </li>
-      <li>
-        <input type="radio" name="answer" id="inChoices" />
-        <label for="choice4" id="choice4">choice4</label>
-      </li>
-      <li id="points">points</li>
-      <button onclick="nextQues()">Submit</button>
-      <button id="leaderboard" style="display: none">
-        <a href="leaderboard/<%= quizId %>">Show Leaderboard</a>
-      </button>
-    </ul>
+    <header>
+      <div class="logo-button">
+        <a href="/">QuizQuest</a>
+      </div>
+      <div class="rightside">
+        <div>
+          <button class="header-button">
+            <a href="/user/logout">Logout</a>
+          </button>
+        </div>
+        <div>
+          <button class="header-button">
+            <a href="/quiz">Quizzes</a>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="outer-box">
+      <div class="question-box">
+        <div class="clock"><div class="clock-bar"></div></div>
+        <div class="display-points">Points: <span id="points">0</span></div>
+        Question
+        <div id="question" class="question"></div>
+      </div>
+      <div class="option-box">
+        <div class="choice-box">
+          <input type="radio" name="answer" class="inChoices" id="choice-1" />
+          <label class="choice" for="choice-1" id="choice1">choice1</label>
+        </div>
+        <div class="choice-box">
+          <input type="radio" name="answer" class="inChoices" id="choice-2" />
+          <label class="choice" for="choice-2" id="choice2">choice2</label>
+        </div>
+        <div class="choice-box">
+          <input type="radio" name="answer" class="inChoices" id="choice-3" />
+          <label class="choice" for="choice-3" id="choice3">choice3</label>
+        </div>
+        <div class="choice-box">
+          <input type="radio" name="answer" class="inChoices" id="choice-4" />
+          <label class="choice" for="choice-4" id="choice4">choice4</label>
+        </div>
+      </div>
+      <div class="lowest-box">
+        <div id="question-index">0</div>
+      </div>
+    </div>
+    <footer>
+      <a class="reserve-rights"> All Rights Reserved | abcd@gmail.com </a>
+    </footer>
     <script>
       const quizId = document.getElementById("quizId").innerText;
       async function getQuestions() {
@@ -59,12 +400,22 @@
       const choice4 = document.getElementById("choice4");
       const leaderboard = document.getElementById("leaderboard");
 
-      const inChoices = document.querySelectorAll("#inChoices");
+      const inChoices = document.querySelectorAll(".inChoices");
+      const questionIndex = document.getElementById("question-index");
+      const clock = document.querySelector(".clock-bar");
+      const main2 = document.querySelector("body");
+
+      console.log(clock);
+
       let index = 0;
       let score = 0;
       let totalScore = 0;
       let data = [];
       let Completed = false;
+
+      function redirectTo(url) {
+        window.location.href = url;
+      }
 
       function displayQuestion() {
         if (Completed) {
@@ -85,17 +436,18 @@
         choice3.innerHTML = data[index].choices[2];
         choice4.innerHTML = data[index].choices[3];
         points.innerText = data[index].points;
+        questionIndex.innerText = `${index + 1}/${data.length}`;
       }
 
       async function nextQues() {
         let answer = "";
-
         inChoices.forEach((e) => {
           if (e.checked) {
+            console.log(e.parentElement);
+            e.checked = false;
             answer = e.nextElementSibling.innerHTML;
           }
         });
-
         if (answer == data[index].correctChoice) {
           score += Number(data[index].points);
           totalScore += Number(data[index].points);
@@ -104,8 +456,21 @@
         }
 
         if (index >= data.length - 1) {
-          alert("Quiz Completed!\nScore: " + score + "/" + totalScore);
+          // alert("Quiz Completed!\nScore: " + score + "/" + totalScore);
           Completed = true;
+          setTimeout(() => {
+            main2.innerHTML = `<div class="loader-container">
+          <div class="gear-loader">
+            <div class="gear">
+              <div class="gear-teeth"></div>
+              </div>
+              </div>
+              <div class="loading-text">Loading...</div>
+              </div>`;
+          }, 100);
+          setTimeout(() => {
+            redirectTo(`http://localhost:8000/quiz/play/leaderboard/${quizId}`);
+          }, 3000);
           index = 0;
           displayQuestion(index);
           // localStorage.setItem("UserScore", score);
@@ -116,9 +481,23 @@
         }
       }
 
+      let i = 0;
+
+      function timeline() {
+        if (i == 1000) {
+          clock.style.width = `${i / 10}%`;
+          i = 0;
+          nextQues();
+          clearInterval(loading);
+        } else {
+          clock.style.width = `${i / 10}%`;
+          i++;
+        }
+      }
       async function main() {
         data = await getQuestions();
         // console.log(data);
+        var loading = setInterval(timeline, 10);
         displayQuestion(index);
       }
       main();
